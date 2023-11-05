@@ -1,0 +1,72 @@
+﻿@model List<ProjeTakip.Models.Personel.PersonelBilgileri>
+@{
+    ViewBag.Title = "Genelİstatistik";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs-3.3.7/jq-2.2.4/jszip-3.1.3/pdfmake-0.1.27/dt-1.10.15/b-1.3.1/b-html5-1.3.1/b-print-1.3.1/r-2.1.1/rg-1.0.0/datatables.min.css" />
+
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs-3.3.7/jq-2.2.4/jszip-3.1.3/pdfmake-0.1.27/dt-1.10.15/b-1.3.1/b-html5-1.3.1/b-print-1.3.1/r-2.1.1/rg-1.0.0/datatables.min.js"></script>
+<div class="card">
+    <h5 class="card-header">İstatistik Listesi</h5>
+    <div class="card-body">
+
+        <table id="istatistiklistele" class="table">
+
+
+
+
+            <thead>
+            <th>PERSONEL ADI</th>
+            <th>TAMAMLANAN PROJE SAYISI</th>
+            <th>TAMAMLANMAYAN PROJE SAYISI</th>
+            <th>TOPLAM PROJE SAYISI</th>
+
+            </thead>
+            <tbody>
+                @foreach (var personel in Model)
+                {
+                    <tr>
+                        <td>@personel.AdSoyad</td>
+                        <td>@ViewBag.TamamlananProjeSayisi[personel.PersonelBilgileriId]</td>
+                        <td>@ViewBag.TamamlanmayanProjeSayisi[personel.PersonelBilgileriId]</td>
+                        <td>@ViewBag.ToplamProjeSayisi[personel.PersonelBilgileriId]</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+  
+    </div>
+</div>
+
+
+<script>
+    $('#istatistiklistele').DataTable({
+        language: {
+            info: "_TOTAL_ kayıttan _START_ - _END_ kayıt gösteriliyor.",
+            infoEmpty: "Gösterilecek hiç kayıt yok.",
+            loadingRecords: "Kayıtlar yükleniyor.",
+            zeroRecords: "Tablo boş",
+            search: "Arama:",
+            infoFiltered: "(toplam _MAX_ kayıttan filtrelenenler)",
+            buttons: {
+                copyTitle: "Panoya kopyalandı.",
+                copySuccess: "Panoya %d satır kopyalandı",
+                copy: "Kopyala",
+                print: "Yazdır",
+            },
+
+            paginate: {
+                first: "İlk",
+                previous: "Önceki",
+                next: "Sonraki",
+                last: "Son"
+            },
+        },
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'excel', 'pdf', 'print'
+        ],
+        responsive: true
+    });
+</script>
